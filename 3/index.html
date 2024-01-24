@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soal no.3</title>
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+    <script>
+        fetch('http://jsonplaceholder.typicode.com/posts')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+              
+                const tableBody = document.getElementById('tableBody');
+
+                data.slice(0, 10).forEach(post => {
+                    const row = document.createElement('tr');
+
+                    ['userId', 'id', 'title', 'body'].forEach(property => {
+                        const cell = document.createElement('td');
+                        cell.textContent = post[property];
+                        row.appendChild(cell);
+                    });
+
+                    const deleteCell = document.createElement('td');
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.addEventListener('click', () => deleteRow(row));
+                    deleteCell.appendChild(deleteButton);
+                    row.appendChild(deleteCell);
+
+                    tableBody.appendChild(row);
+                });
+
+                function deleteRow(row) {
+                    tableBody.removeChild(row);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+        async function hashString(inputString) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(inputString);
+
+            const buffer = await crypto.subtle.digest('SHA-256', data);
+
+            const hashArray = Array.from(new Uint8Array(buffer));
+            const hashedString = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+
+            console.log(hashedString);
+        }
+
+        hashString('24012024firmanpriaifabula');
+    </script>
+</body>
+</html>

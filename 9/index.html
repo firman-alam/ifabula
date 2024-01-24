@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+</head>
+<body>
+  <div id="loginForm">
+    <label>Username:</label>
+    <input type="text" id="usernameInput">
+
+    <label>Password:</label>
+    <input type="password" id="passwordInput">
+
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="welcomeMessage" style="display: none;">
+    <label>Selamat datang, <span id="loggedInUser"></span>!</label>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("usernameInput").value;
+      const password = document.getElementById("passwordInput").value;
+
+      // Your login logic goes here
+      // For simplicity, let's assume a successful login for any input
+
+      // Save data to localStorage
+      localStorage.setItem("loggedInUser", username);
+
+      // Show welcome message, hide login form
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("welcomeMessage").style.display = "block";
+      document.getElementById("loggedInUser").innerText = username;
+    }
+
+    function logout() {
+      // Clear localStorage
+      localStorage.removeItem("loggedInUser");
+
+      // Hide welcome message, show login form
+      document.getElementById("welcomeMessage").style.display = "none";
+      document.getElementById("loginForm").style.display = "block";
+    }
+
+    // Check if user is already logged in
+    const storedUser = localStorage.getItem("loggedInUser");
+    if (storedUser) {
+      // Show welcome message, hide login form
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("welcomeMessage").style.display = "block";
+      document.getElementById("loggedInUser").innerText = storedUser;
+    }
+  </script>
+</body>
+</html>

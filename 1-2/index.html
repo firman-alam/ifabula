@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soal no.1 dan 2</title>
+</head>
+<body>
+    <label id="data-label">Label Text</label>
+    <button onclick="changeLabel()">Change Label</button>
+
+    <script>
+        let jsonData
+
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                jsonData = data
+                updateLabel()
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        function updateLabel() {
+            const label = document.getElementById('data-label');
+            if (jsonData && jsonData.length > 0) {
+                const firstEntry = jsonData[0];
+                label.textContent = `Nama: ${firstEntry.nama}`;
+            } else {
+                label.textContent = 'No data available';
+            }
+        }
+
+        function changeLabel() {
+            jsonData.reverse();
+            updateLabel();
+        }
+    </script>
+</body>
+</html>
